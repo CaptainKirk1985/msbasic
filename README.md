@@ -8,13 +8,13 @@ Changes to this fork:
     LCDOFF - Will disable the terminal output to the LCD
 
 Example
-10 LCDPRINT "What's your name                        "
-20 LCDON
-30 INPUT "? ";N$
-40 LCDOFF
-50 LCDCLR
-60 LCDPRINT "Hello                                   "
-70 LCDPRINT N$
+* 10 LCDPRINT "What's your name                        "
+* 20 LCDON
+* 30 INPUT "? ";N$
+* 40 LCDOFF
+* 50 LCDCLR
+* 60 LCDPRINT "Hello                                   "
+* 70 LCDPRINT N$
 
 All credit to Ben Eater for this fantastic project please read the below.
 
