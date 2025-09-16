@@ -5,6 +5,7 @@
                 .org ZP_START0
 READ_PTR:       .res 1
 WRITE_PTR:      .res 1
+LCD_SETTING:    .res 1
 
 .segment "INPUT_BUFFER"
 INPUT_BUFFER:   .res $100
@@ -60,6 +61,17 @@ CHRIN:
 ; Modifies: flags
 MONCOUT:
 CHROUT:
+                pha
+                lda     LCD_SETTING
+                cmp     #%00000001    
+                bne     CHROUT2
+                pla
+                jsr     lcd_print_char
+                jmp     CHROUT3
+                
+CHROUT2:
+                pla
+CHROUT3:
                 pha
                 sta     ACIA_DATA
                 lda     #$FF
