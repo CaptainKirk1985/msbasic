@@ -34,6 +34,7 @@ lcdbusy:
   rts
 
 LCDINIT:
+  jsr LCD_DISABLE
   lda #$ff ; Set all pins on port B to output
   sta DDRB
 
@@ -77,6 +78,42 @@ LCDINIT:
   jsr lcd_instruction
   rts
 
+LCD_ENABLE:
+  pha
+  lda #%00000001 ; Set bit one in LCD Settings
+  sta LCD_SETTING
+  pla
+  rts
+
+LCD_DISABLE:
+  pha
+  lda #%00000000 ; Remove bit one in LCD Settings
+  sta LCD_SETTING
+  pla
+  rts
+
+LCDCLR:
+  pha
+  lda #%00000001 ; Clear Screen
+  jsr lcd_instruction
+  pla 
+  rts
+
+LCDBS:
+  pha
+  lda #$01
+  and LCD_SETTING
+  cmp #$01
+  bne IGNOREBS
+  lda #%00010000 ; Clear Screen
+  jsr lcd_instruction
+  lda #$20
+  jsr lcd_print_char
+  lda #%00010000 ; Clear Screen
+  jsr lcd_instruction
+IGNOREBS:
+  pla 
+  rts
 
 LCDCMD:
   jsr GETBYT
@@ -121,7 +158,18 @@ lcd_print_loop:
   rts
 
 lcd_print_char:
+  cmp #$0A
+  bne check_LF
+  rts
+
+check_LF:
+  cmp #$0D
+  bne lcd_print_char_2
+  rts
+
+lcd_print_char_2:
   jsr lcd_wait
+  pha
   pha
   lsr
   lsr
@@ -141,6 +189,7 @@ lcd_print_char:
   sta PORTB
   eor #E          ; Clear E bit
   sta PORTB
+  pla
   rts
 
 .endif

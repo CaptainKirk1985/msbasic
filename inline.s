@@ -60,6 +60,12 @@ INLINAIM:
     .endif
         cmp     #$0D
         beq     L2453
+    .ifdef EATER
+        cmp     #$08      ; BS (Ctrl-H)
+        beq     DEL_BACKSPACE
+        cmp     #$7F      ; DEL
+        beq     DEL_BACKSPACE
+    .endif
     .ifndef CONFIG_NO_LINE_EDITING
         cmp     #$20
       .ifdef AIM65
@@ -162,4 +168,24 @@ RDKEY:
         pla
 L2465:
         rts
+.endif
+
+.ifdef EATER
+DEL_BACKSPACE:
+        cpx     #$00      ; Are we at start of buffer?
+        beq     BELBEEP   ; Nothing to delete, just beep
+        dex                 ; One less character
+        lda     #$08        ; Move cursor back
+        jsr     OUTDO
+        lda     #$20        ; Erase with space
+        jsr     OUTDO
+        lda     #$08        ; Move cursor back again
+        jsr     OUTDO
+        jsr     LCDBS       ; Delete in LCD as well
+        jmp     INLIN2
+
+BELBEEP:
+        lda     #$07        ; BEL
+        jsr     OUTDO
+        jmp     INLIN2
 .endif

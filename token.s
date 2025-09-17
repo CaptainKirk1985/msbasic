@@ -79,6 +79,9 @@
 .endif
 		keyword_rts "NEW", NEW
 .ifdef EATER
+		keyword_rts "LCDON", LCD_ENABLE
+		keyword_rts "LCDOFF", LCD_DISABLE
+		keyword_rts "LCDCLR", LCDCLR
 		keyword_rts "LCDCMD", LCDCMD
 		keyword_rts "LCDPRINT", LCDPRINT
                 keyword_rts "BEEP", BEEP

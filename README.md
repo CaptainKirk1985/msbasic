@@ -1,5 +1,24 @@
-# Microsoft BASIC for the Ben Eater 6502 project
+# Microsoft BASIC for the Ben Eater 6502 project Forked by CaptainKirk1985
 
+Changes to this fork:
+1. Delete and Backspace will now delete the previously typed characters to the beginning of the line.
+2. LCD Commands have been added to allow the LCD to be used in instructions and for Inputs
+    LCDCLR - Clears Screen similar to LCDCMD 1
+    LCDON - Will send the terminal ouput to the LCD aswell except for CR and LF
+    LCDOFF - Will disable the terminal output to the LCD
+
+Example
+* 10 LCDPRINT "What's your name________________________"
+* 20 LCDON
+* 30 INPUT "? ";N$
+* 40 LCDOFF
+* 50 LCDCLR
+* 60 LCDPRINT "Hello___________________________________"
+* 70 LCDPRINT N$
+
+All credit to Ben Eater for this fantastic project please read the below.
+
+# Microsoft BASIC for the Ben Eater 6502 project
 This code was forked from [mist64/msbasic](https://github.com/mist64/msbasic) and I've added the code from my YouTube videos describing how to port MSBASIC to my 6502 project. The latest commit will match the code from the latest video.
 
 But if you're following along with earlier videos, the "code" link below will take you to the code from that video:
